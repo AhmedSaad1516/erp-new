@@ -1,0 +1,18 @@
+<lib-page-content class="libCont">
+  <!-- <lib-bread-crumb></lib-bread-crumb> -->
+  <div class="grid" style="margin-top: 2%" [ngClass]="{ ar: lang == 'ar' }">
+    <div
+      class="md:col-4 card-container"
+      *ngFor="let module of moduleList"
+      (click)="navigateto(module.moduleId)"
+    >
+      <div class="modal-card">
+        <!-- <img src="assets/images/card.png" class="background" /> -->
+        <div class="card_photo">
+          <img src="assets/images/{{ module.moduleLogo }}" class="foreground" alt="not loaded" />
+        </div>
+        <p class="caption">{{ module.module }}</p>
+      </div>
+    </div>
+  </div>
+</lib-page-content>

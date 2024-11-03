@@ -1,0 +1,14 @@
+<lib-popup-page
+title="{{'confirmation' | translate}}"
+[closeFunction]="onCancel"
+(Submit)="onSubmit()"
+>
+<div *ngFor="let elem of data" class="center">
+  <p class="confirm body-b16">
+    {{ 'bank.confirm' | translate }} <span class="spanText"> ({{ elem.accountName }}) </span>
+  </p>
+</div>
+<p class="body-b20 center">{{ 'bank.confirm2' | translate }}
+</p>
+<!-- </div> -->
+</lib-popup-page>

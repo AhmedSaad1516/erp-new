@@ -1,0 +1,84 @@
+
+<lib-popup-page
+title=" {{ 'tag.EditTag' | translate }}"
+[closeFunction]="onCancel"
+(Submit)="onSubmit()"
+>
+<div>
+  <form class="domain_form" [formGroup]="tagForm" (ngSubmit)="onSubmit()">
+    <div class="domain_content">
+      <div class="grid m-0">
+        <div class="col-12">
+          <lib-form-group>
+            <lib-text-input
+              [iconUrl]="'assets/images/Vector.png'"
+              placeholder="{{ 'tag.addtag.code' | translate }}"
+              type="text"
+              formControlName="Code"
+              [readOnly]="true"
+              class="form-control"
+            ></lib-text-input>
+            <lib-field-validations
+              [appControl]="tagForm.controls['Code']"
+            ></lib-field-validations>
+          </lib-form-group>
+        </div>
+        <!--  -->
+        <div class="col-12">
+          <lib-form-group>
+            <lib-text-input
+              placeholder="{{ 'tag.addtag.name' | translate }}"
+              [iconUrl]="'assets/images/fi-rr-text-check@2x.png'"
+              type="text"
+              formControlName="Name"
+            ></lib-text-input>
+            <lib-field-validations
+              [appControl]="tagForm.controls['Name']"
+            ></lib-field-validations>
+          </lib-form-group>
+        </div>
+
+        <!--  -->
+
+        <div class="col-12">
+          <lib-form-group>
+            <lib-multi-select
+              placeholder="{{ 'tag.addtag.applicability' | translate }}"
+              [options]="modulelist"
+              optionLabel="name"
+              optionValue="id"
+              formControlName="ModulesId"
+              [selectedValue]="selectedModules!"
+            >
+            </lib-multi-select>
+            <lib-field-validations
+              [appControl]="tagForm.controls['ModulesId']"
+            ></lib-field-validations>
+          </lib-form-group>
+        </div>
+
+      <div class="col-12">
+        <lib-form-group>
+          <div >
+            <lib-input-switch formControlName="IsActive"></lib-input-switch>
+            <p class="active" *ngIf="tagForm.controls['IsActive'].value">
+              {{ 'tag.Active' | translate }}
+            </p>
+            <p class="inactive" *ngIf="!tagForm.controls['IsActive'].value">
+              {{ 'tag.Deactivate' | translate }}
+            </p>
+          </div>
+          <lib-field-validations
+            [appControl]="tagForm.controls['IsActive']"
+          ></lib-field-validations>
+        </lib-form-group>
+      </div>
+    </div>
+    </div>
+  </form>
+</div>
+</lib-popup-page>
+
+  
+  
+

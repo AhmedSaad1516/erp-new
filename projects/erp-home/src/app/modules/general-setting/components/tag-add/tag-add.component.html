@@ -1,0 +1,60 @@
+
+<lib-popup-page
+title=" {{ 'tag.AddNewTag' | translate }}"
+[closeFunction]="onCancel"
+(Submit)="onSubmit()"
+>
+<div>
+  <form class="domain_form" [formGroup]="tagForm" (ngSubmit)="onSubmit()">
+    <div class="domain_content">
+      <div class="grid m-0">
+        <div class="col-12 my-2">
+          <lib-form-group>
+            <lib-text-input
+              type="text"
+              formControlName="code"
+              placeholder="{{ 'tag.addtag.code' | translate }}"
+              [readOnly]="true"
+              [iconUrl]="'assets/images/Vector.png'"
+              class="form-control"
+            />
+            <lib-field-validations
+              [appControl]="tagForm.controls['code']"
+            ></lib-field-validations>
+          </lib-form-group>
+        </div>
+        <div class="col-12 my-2">
+          <lib-form-group>
+            <lib-text-input
+              type="text"
+              formControlName="name"
+              [iconUrl]="'assets/images/fi-rr-text-check@2x.png'"
+              placeholder="{{ 'tag.addtag.name' | translate }}"
+            />
+            <lib-field-validations
+              [appControl]="tagForm.controls['name']"
+            ></lib-field-validations>
+          </lib-form-group>
+        </div>
+
+        <div class="col-12 my-2 multi-cont">
+          <lib-form-group [className]="'customWidth'">
+            <lib-multi-select
+              placeholder="{{ 'tag.addtag.applicability' | translate }}"
+              [options]="modulelist"
+              optionLabel="name"
+              optionValue="id"
+              formControlName="moduleIds"
+            ></lib-multi-select>
+            <lib-field-validations [appControl]="tagForm.controls['moduleIds']">
+            </lib-field-validations>
+          </lib-form-group>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+</lib-popup-page>
+
+  
+  

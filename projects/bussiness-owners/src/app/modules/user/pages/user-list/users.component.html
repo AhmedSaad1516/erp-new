@@ -1,0 +1,151 @@
+<lib-page-content>
+  <lib-new-bread-crumb >
+   
+  </lib-new-bread-crumb>
+  <div class="user_page user-cont">
+    <lib-data-table
+      [items]="userData"
+      [tableConfigs]="{
+        allowPagination: true,
+        allowServerPagination: false,
+        dataKey: 'id',
+        pageSize: 10,
+        columns: [
+          {
+            name: 'name',
+            headerText: ('User.Name' | translate),
+            isGlobalFilter: true,
+            isSortable: true,
+            template: userCol
+          },
+          {
+            name: 'email',
+            headerText: ('User.Email' | translate),
+            isGlobalFilter: true,
+            isSortable: true
+          },
+          {
+            name: 'lastLoginDate',
+            headerText: ('User.LastLogin' | translate),
+           template:lastloginCol
+          },
+          {
+            name: 'license',
+            headerText: ('User.License' | translate),
+            isGlobalFilter: true,
+          },
+          {
+            name: 'invitationStatus',
+            headerText: ('User.Status' | translate),
+            template: status
+          },
+          {
+            name: 'name',
+            headerText: ('User.Actions' | translate),
+            template: actionsCol
+          }
+        ]
+      }"
+    >
+    
+    <ng-container search>
+      <lib-text-input
+      type="text"
+      (input)="applyFilterGlobal($event, 'contains')"
+      (keyup)="search($event)"
+      placeholder="{{'User.Search' | translate}}"
+      [iconUrl]="'https://static.thenounproject.com/png/101791-200.png'"
+
+    />
+      </ng-container>
+      <ng-container action>
+        <div class="flex gap-2">
+
+          <lib-export
+          (exportClick)="exportUsersData()"
+          [exportData]="mappedUserData"
+          [exportColumns]="exportColumns"
+          [ExportName]="'Users'"
+        >
+        </lib-export>
+        <lib-button-micro 
+        title="{{ 'User.AddNew' | translate }}"
+        [iconName]="'pi pi-plus'"
+        nameClass="save" 
+        (click)="openInviteModal()"
+
+        >
+
+        </lib-button-micro>
+
+       
+      </div>
+</ng-container>
+    </lib-data-table>
+    <ng-template #lastloginCol let-user>
+      <div class="user_info">
+        <p>{{ user.lastLoginDate | date }}</p>
+      </div>
+    </ng-template>
+
+    <ng-template #userCol let-user>
+      <div class="user_info">
+        <lib-attachment-viewer
+          *ngIf="user.photo"
+          [attachmentId]="user.photo"
+          [className]="'thumbnail'"
+        />
+        <p>{{ user.name }}</p>
+      </div>
+    </ng-template>
+
+    <ng-template #actionsCol let-user>
+      <div class="actions flex align-items-center gap-2">
+
+      <lib-button-micro 
+      *ngIf="user.invitationStatus == 'Accepted'"
+      nameClass="table_button_edit" 
+      (click)="editUser(user.id)"
+
+      />
+      <lib-button-micro 
+      nameClass="table_button_delete" 
+      (click)="removeUser(user.email)"
+      />
+</div>
+    </ng-template>
+    <ng-template #status let-user>
+      
+      <div  *ngIf="user.invitationStatus == 'Accepted'" class="checked" [ngClass]="{ checked_ar: langAr }"
+      >
+        <lib-input-switch
+          [id]="user.id"
+          (click)="changed($event, user)"
+          [(ngModel)]="user.isActive"
+        >
+      </lib-input-switch>
+
+        <p class="active" *ngIf="user.isActive">
+          {{ 'User.Activate' | translate }}
+        </p>
+        <p class="inactive" *ngIf="!user.isActive">
+          {{ 'User.Deactivate' | translate }}
+        </p>
+      </div>
+      <div class="checked">
+        <button
+          class="resend"
+          (click)="resendInvitation(user.id)"
+          *ngIf="user.invitationStatus == 'Invited'"
+        >
+          <p class="title">{{ "User.Resend" | translate }}</p>
+          <p class="ico_mail pi pi-envelope"></p>
+        </button>
+      </div>
+    </ng-template>
+    <ng-template #date let-user>
+  <p>{{user.lastLoginDate | date : 'dd/MM/yyyy'}}</p>
+ 
+    </ng-template>
+  </div>
+</lib-page-content>
